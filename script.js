@@ -351,7 +351,7 @@ const study = lab.util.fromObject({
           {
             "required": true,
             "type": "html",
-            "content": "\u003Cdiv\u003E\n\u003Cvideo id=\"video-player\" autoplay playsinline\u003E\n\u003Csource src=\"${parameters.videoURL}\" type=\"video\u002Fmp4\"\u003E\nお使いのブラウザはビデオタグをサポートしていません。\n\u003C\u002Fvideo\u003E\n\u003C\u002Fdiv\u003E\n",
+            "content": "\u003Cdiv\u003E\n\u003Cvideo id=\"video-player\" autoplay playsinline width=\"100%\"\u003E\n\u003Csource src=\"${parameters.videoURL}\" type=\"video\u002Fmp4\"\u003E\nお使いのブラウザはビデオタグをサポートしていません。\n\u003C\u002Fvideo\u003E\n\u003C\u002Fdiv\u003E\n",
             "name": ""
           }
         ],
