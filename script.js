@@ -24,12 +24,12 @@ const study = lab.util.fromObject({
         {
           "type": "text",
           "title": "本実験・調査について",
-          "content": "本実験・調査の実施責任者は慶應義塾大学メディアコミュニケーション研究所李光鎬研究会ゼミの八幡美生です。本実験・調査への参加へあなたの任意によるものです。"
+          "content": "本実験・調査への参加へあなたの任意によるものです。"
         },
         {
           "required": true,
           "type": "text",
-          "content": "キャラクター属性変更に対する観客受容の研究について調べることが本実験・調査の目的です。",
+          "content": "映像のカット割り、照明、音響などの演出方法の違いが、観客のストーリーへの集中度や作品世界への没入感にどう影響するかを調べることが本実験・調査の目的です。",
           "title": "１.本実験・調査の目的"
         },
         {
@@ -48,7 +48,7 @@ const study = lab.util.fromObject({
           "required": true,
           "type": "text",
           "title": "4.参加による利益",
-          "content": "あなたが本実験・調査に参加することでメディア心理学・映画表象についての研究を発展に繋がります。"
+          "content": "あなたが本実験・調査に参加することでメディア心理学・映画表象についての研究の発展に繋がります。"
         },
         {
           "required": true,
@@ -76,7 +76,7 @@ const study = lab.util.fromObject({
         }
       ],
       "scrollTop": true,
-      "submitButtonText": "Continue →",
+      "submitButtonText": "次へ",
       "submitButtonPosition": "right",
       "files": {},
       "responses": {
@@ -106,26 +106,7 @@ const study = lab.util.fromObject({
       "parameters": {},
       "messageHandlers": {},
       "title": "Loop",
-      "shuffleGroups": [],
-      "template": {
-        "type": "lab.html.Page",
-        "items": [
-          {
-            "type": "text",
-            "title": "\u003Cdiv\u003E  \u003Cvideo id=\"video-player\" autoplay playsinline\u003E    \u003Csource src=\"${parameters.videoURL}\" type=\"video\u002Fmp4\"\u003E    お使いのブラウザはビデオタグをサポートしていません。  \u003C\u002Fvideo\u003E \u003C\u002Fdiv\u003E"
-          }
-        ],
-        "scrollTop": true,
-        "submitButtonText": "Continue →",
-        "submitButtonPosition": "right",
-        "files": {},
-        "responses": {
-          "": ""
-        },
-        "parameters": {},
-        "messageHandlers": {},
-        "title": "Page"
-      }
+      "shuffleGroups": []
     },
     {
       "type": "lab.html.Page",
@@ -263,7 +244,7 @@ const study = lab.util.fromObject({
         "items": [
           {
             "type": "text",
-            "content": "以下の質問文を読んでいただき，あたなにもっとも当てはまると思う選択肢を選んで回答してください。回答は選択肢のボタンをチェックすることで行ってください。"
+            "content": "以下の質問文を読んでいただき，あなたにもっとも当てはまると思う選択肢を選んで回答してください。回答は選択肢のボタンをチェックすることで行ってください。"
           },
           {
             "required": true,
@@ -313,6 +294,25 @@ const study = lab.util.fromObject({
         "messageHandlers": {},
         "title": "Questionnaire"
       }
+    },
+    {
+      "type": "lab.html.Page",
+      "items": [
+        {
+          "type": "text",
+          "content": "次に、4本の短い動画を視聴していただきます。動画視聴後、提示される質問に回答してください。"
+        }
+      ],
+      "scrollTop": true,
+      "submitButtonText": "Continue →",
+      "submitButtonPosition": "right",
+      "files": {},
+      "responses": {
+        "": ""
+      },
+      "parameters": {},
+      "messageHandlers": {},
+      "title": "Page"
     },
     {
       "type": "lab.flow.Loop",
@@ -477,6 +477,73 @@ const study = lab.util.fromObject({
         "messageHandlers": {},
         "title": "Questionnaire"
       }
+    },
+    {
+      "type": "lab.html.Page",
+      "items": [
+        {
+          "type": "text",
+          "content": "本研究の本当の目的は、観客が属性変更をどのように解釈するのか、どのような価値観に基づいて評価するのか、を明らかにすることです。",
+          "title": "本研究の目的"
+        },
+        {
+          "required": true,
+          "type": "text",
+          "content": "回答にバイアスがかからないよう、あえて異なる目的をお伝えしていました。事前に正しくお伝えできなかったことをお詫び申し上げます。"
+        },
+        {
+          "required": true,
+          "type": "text",
+          "content": "これまでの回答データはすべて匿名で処理され、個人が特定されることはありません。"
+        },
+        {
+          "required": true,
+          "type": "checkbox",
+          "label": "改めて、本実験への参加に同意していただけますか？同意していただける場合はチェックをお願いします。同意いただけない方は，ESCを押した後，ウィンドウを閉じてください。",
+          "options": [
+            {
+              "label": "上記の説明をよく読み，理解した上で，実験・調査への参加に同意します。",
+              "coding": "informedConsent2"
+            }
+          ],
+          "name": "esc"
+        }
+      ],
+      "scrollTop": true,
+      "submitButtonText": "次へ",
+      "submitButtonPosition": "right",
+      "files": {},
+      "responses": {
+        "": ""
+      },
+      "parameters": {},
+      "messageHandlers": {},
+      "title": "informedConsent2"
+    },
+    {
+      "type": "lab.html.Page",
+      "items": [
+        {
+          "type": "text"
+        },
+        {
+          "required": false,
+          "type": "textarea",
+          "label": "本研究にご協力いただいたお礼として、謝礼金100円を差し上げます。",
+          "help": "謝礼金をご希望の方は、メールアドレスのご記入をお願いいたします。希望されない場合は空欄のままで結構です。",
+          "name": "Thanks"
+        }
+      ],
+      "scrollTop": true,
+      "submitButtonText": "次へ",
+      "submitButtonPosition": "right",
+      "files": {},
+      "responses": {
+        "": ""
+      },
+      "parameters": {},
+      "messageHandlers": {},
+      "title": "Thanks"
     },
     {
       "type": "lab.canvas.Screen",
