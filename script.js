@@ -308,7 +308,7 @@ this.state.condition = (id % 4) + 1; //1を足して、0~3を1~4に変換
         }
       ],
       "scrollTop": true,
-      "submitButtonText": "Continue →",
+      "submitButtonText": "次へ",
       "submitButtonPosition": "right",
       "files": {},
       "responses": {
@@ -329,7 +329,7 @@ this.state.condition = (id % 4) + 1; //1を足して、0~3を1~4に変換
         }
       ],
       "scrollTop": true,
-      "submitButtonText": "Continue →",
+      "submitButtonText": "次へ",
       "submitButtonPosition": "right",
       "files": {},
       "responses": {
@@ -349,7 +349,7 @@ this.state.condition = (id % 4) + 1; //1を足して、0~3を1~4に変換
         }
       ],
       "scrollTop": true,
-      "submitButtonText": "Continue →",
+      "submitButtonText": "次へ",
       "submitButtonPosition": "right",
       "files": {},
       "responses": {
@@ -369,7 +369,7 @@ this.state.condition = (id % 4) + 1; //1を足して、0~3を1~4に変換
         }
       ],
       "scrollTop": true,
-      "submitButtonText": "Continue →",
+      "submitButtonText": "次へ",
       "submitButtonPosition": "right",
       "files": {},
       "responses": {
