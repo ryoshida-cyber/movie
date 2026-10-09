@@ -24,7 +24,7 @@ const study = lab.util.fromObject({
         {
           "type": "text",
           "title": "本実験・調査について",
-          "content": "本実験・調査への参加へあなたの任意によるものです。"
+          "content": "本実験・調査への参加はあなたの任意によるものです。"
         },
         {
           "required": true,
@@ -36,12 +36,12 @@ const study = lab.util.fromObject({
           "required": true,
           "type": "text",
           "title": "2.本実験の手続き",
-          "content": "もし、あなたが本実験・調査に参加した場合、あなたは動画の視聴と質問の回答にしてもらいます。この実験・調査の所要時間は約10分程度です。"
+          "content": "もし、あなたが本実験・調査に参加した場合、あなたには動画の視聴と質問への回答をしてもらいます。この実験・調査の所要時間は約10分程度です。"
         },
         {
           "required": true,
           "type": "text",
-          "content": "実験による多少の疲労は除き，潜在的なリスクや苦痛はありません。また，いつ，いかなる理由でも，自由に実験を中止していただけます（6.参加と中止もご参照ください）",
+          "content": "実験による多少の疲労は除き，潜在的なリスクや苦痛はありません。また，いつ，いかなる理由でも，自由に実験を中止していただけます。",
           "title": "3.潜在的なリスク・苦痛など"
         },
         {
@@ -55,12 +55,6 @@ const study = lab.util.fromObject({
           "type": "text",
           "title": "5.参加と中止",
           "content": "あなたは本実験・調査への参加もしくは不参加を自由に選択できます。また，参加した場合でも，いつでも，どのような理由でも，途中で実験・調査を中止することができます。 もし，途中で実験・調査を中止したくなった場合は，「ESCキー」を押した後，ウィンドウを閉じることで実験・調査を中止できます。"
-        },
-        {
-          "required": true,
-          "type": "text",
-          "content": "本実験・調査に対して質問がある場合は，実施責任者にお問い合わせください。",
-          "title": "6.実験・調査実施者への問い合わせ"
         },
         {
           "required": true,
@@ -83,7 +77,23 @@ const study = lab.util.fromObject({
         "": ""
       },
       "parameters": {},
-      "messageHandlers": {},
+      "messageHandlers": {
+        "before:prepare": function anonymous() {
+const digits = 10;
+const participantID = this.random.range(10**digits, 10**(digits+1));
+
+this.parameters.participantID = participantID;
+
+//あらかじめ、参加者IDを条件の数で割った余りを計算し、
+// conditionという変数に実験集団の番号をセットする
+//（以下は条件が4つの場合）
+const id = Number(this.parameters.participantID);
+this.state.condition = (id % 4) + 1; //1を足して、0~3を1~4に変換
+
+
+
+}
+      },
       "title": "informedConsent"
     },
     {
@@ -156,31 +166,6 @@ const study = lab.util.fromObject({
       "parameters": {},
       "messageHandlers": {},
       "title": "Demgraphic"
-    },
-    {
-      "type": "lab.html.Page",
-      "items": [
-        {
-          "type": "text"
-        },
-        {
-          "required": false,
-          "type": "textarea",
-          "label": "調査・実験時の問題",
-          "help": "調査・実験の際に問題があった方は内容をご入力ください。問題がなかった方は空欄のままで結構です。",
-          "name": "Error Report"
-        }
-      ],
-      "scrollTop": true,
-      "submitButtonText": "次へ",
-      "submitButtonPosition": "right",
-      "files": {},
-      "responses": {
-        "": ""
-      },
-      "parameters": {},
-      "messageHandlers": {},
-      "title": "Error Report"
     },
     {
       "type": "lab.flow.Loop",
@@ -284,7 +269,7 @@ const study = lab.util.fromObject({
           }
         ],
         "scrollTop": true,
-        "submitButtonText": "Continue →",
+        "submitButtonText": "次へ",
         "submitButtonPosition": "right",
         "files": {},
         "responses": {
@@ -300,7 +285,26 @@ const study = lab.util.fromObject({
       "items": [
         {
           "type": "text",
-          "content": "次に、4本の短い動画を視聴していただきます。動画視聴後、提示される質問に回答してください。"
+          "content": "次に、短い動画を視聴していただきます。動画視聴後、提示される質問に回答してください。"
+        }
+      ],
+      "scrollTop": true,
+      "submitButtonText": "次へ",
+      "submitButtonPosition": "right",
+      "files": {},
+      "responses": {
+        "": ""
+      },
+      "parameters": {},
+      "messageHandlers": {},
+      "title": "Page"
+    },
+    {
+      "type": "lab.html.Page",
+      "items": [
+        {
+          "type": "text",
+          "content": "\u003Cdiv\u003E\n\u003Cvideo id=\"video-player\" autoplay playsinline width=\"100%\"\u003E\n\u003Csource src=\"https:\u002F\u002Fryoshida-cyber.github.io\u002Fmovie\u002F1.mp4\" type=\"video\u002Fmp4\"\u003E\nお使いのブラウザはビデオタグをサポートしていません。\n\u003C\u002Fvideo\u003E\n\u003C\u002Fdiv\u003E\n"
         }
       ],
       "scrollTop": true,
@@ -312,60 +316,69 @@ const study = lab.util.fromObject({
       },
       "parameters": {},
       "messageHandlers": {},
-      "title": "Page"
+      "title": "Page",
+      "skip": "${this.state.condition != 1}"
     },
     {
-      "type": "lab.flow.Loop",
-      "templateParameters": [
+      "type": "lab.html.Page",
+      "items": [
         {
-          "videoURL": "https:\u002F\u002Fryoshida-cyber.github.io\u002Fmovie\u002F1.mp4",
-          "": ""
-        },
-        {
-          "videoURL": "https:\u002F\u002Fryoshida-cyber.github.io\u002Fmovie\u002F2.mp4",
-          "": ""
-        },
-        {
-          "videoURL": "https:\u002F\u002Fryoshida-cyber.github.io\u002Fmovie\u002F3.mp4",
-          "": ""
-        },
-        {
-          "videoURL": "https:\u002F\u002Fryoshida-cyber.github.io\u002Fmovie\u002F4.mp4",
-          "": ""
+          "required": true,
+          "type": "text",
+          "content": "\u003Cdiv\u003E\n\u003Cvideo id=\"video-player\" autoplay playsinline width=\"100%\"\u003E\n\u003Csource src=\"https:\u002F\u002Fryoshida-cyber.github.io\u002Fmovie\u002F2.mp4\" type=\"video\u002Fmp4\"\u003E\nお使いのブラウザはビデオタグをサポートしていません。\n\u003C\u002Fvideo\u003E\n\u003C\u002Fdiv\u003E\n"
         }
       ],
-      "sample": {
-        "mode": "draw-shuffle"
-      },
+      "scrollTop": true,
+      "submitButtonText": "Continue →",
+      "submitButtonPosition": "right",
       "files": {},
       "responses": {
         "": ""
       },
       "parameters": {},
       "messageHandlers": {},
-      "title": "Loop",
-      "shuffleGroups": [],
-      "template": {
-        "type": "lab.html.Page",
-        "items": [
-          {
-            "required": true,
-            "type": "html",
-            "content": "\u003Cdiv\u003E\n\u003Cvideo id=\"video-player\" autoplay playsinline width=\"100%\"\u003E\n\u003Csource src=\"${parameters.videoURL}\" type=\"video\u002Fmp4\"\u003E\nお使いのブラウザはビデオタグをサポートしていません。\n\u003C\u002Fvideo\u003E\n\u003C\u002Fdiv\u003E\n",
-            "name": ""
-          }
-        ],
-        "scrollTop": true,
-        "submitButtonText": "Continue →",
-        "submitButtonPosition": "right",
-        "files": {},
-        "responses": {
-          "": ""
-        },
-        "parameters": {},
-        "messageHandlers": {},
-        "title": "Page"
-      }
+      "title": "Page",
+      "skip": "${this.state.condition != 2}"
+    },
+    {
+      "type": "lab.html.Page",
+      "items": [
+        {
+          "type": "text",
+          "content": "\u003Cdiv\u003E\n\u003Cvideo id=\"video-player\" autoplay playsinline width=\"100%\"\u003E\n\u003Csource src=\"https:\u002F\u002Fryoshida-cyber.github.io\u002Fmovie\u002F3.mp4\" type=\"video\u002Fmp4\"\u003E\nお使いのブラウザはビデオタグをサポートしていません。\n\u003C\u002Fvideo\u003E\n\u003C\u002Fdiv\u003E\n"
+        }
+      ],
+      "scrollTop": true,
+      "submitButtonText": "Continue →",
+      "submitButtonPosition": "right",
+      "files": {},
+      "responses": {
+        "": ""
+      },
+      "parameters": {},
+      "messageHandlers": {},
+      "title": "Page",
+      "skip": "${this.state.condition != 3}"
+    },
+    {
+      "type": "lab.html.Page",
+      "items": [
+        {
+          "type": "text",
+          "content": "\u003Cdiv\u003E\n\u003Cvideo id=\"video-player\" autoplay playsinline width=\"100%\"\u003E\n\u003Csource src=\"https:\u002F\u002Fryoshida-cyber.github.io\u002Fmovie\u002F4.mp4\" type=\"video\u002Fmp4\"\u003E\nお使いのブラウザはビデオタグをサポートしていません。\n\u003C\u002Fvideo\u003E\n\u003C\u002Fdiv\u003E\n"
+        }
+      ],
+      "scrollTop": true,
+      "submitButtonText": "Continue →",
+      "submitButtonPosition": "right",
+      "files": {},
+      "responses": {
+        "": ""
+      },
+      "parameters": {},
+      "messageHandlers": {},
+      "title": "Page",
+      "skip": "${this.state.condition != 4}"
     },
     {
       "type": "lab.flow.Loop",
@@ -546,12 +559,37 @@ const study = lab.util.fromObject({
       "title": "Thanks"
     },
     {
+      "type": "lab.html.Page",
+      "items": [
+        {
+          "type": "text"
+        },
+        {
+          "required": false,
+          "type": "textarea",
+          "label": "調査・実験時の問題",
+          "help": "調査・実験の際に問題があった方は内容をご入力ください。問題がなかった方は空欄のままで結構です。",
+          "name": "Error Report"
+        }
+      ],
+      "scrollTop": true,
+      "submitButtonText": "次へ",
+      "submitButtonPosition": "right",
+      "files": {},
+      "responses": {
+        "": ""
+      },
+      "parameters": {},
+      "messageHandlers": {},
+      "title": "Error Report"
+    },
+    {
       "type": "lab.canvas.Screen",
       "content": [
         {
           "type": "i-text",
-          "left": -11,
-          "top": -25,
+          "left": 0,
+          "top": 0,
           "angle": 0,
           "width": 480,
           "height": 78.11,
@@ -578,7 +616,7 @@ const study = lab.util.fromObject({
       "parameters": {},
       "messageHandlers": {
         "before:prepare": function anonymous() {
-//check Tardy
+ //check Tardy
 //ファイル名をランダムIDにする
 const participantID = this.random.uuid4()
 
@@ -593,7 +631,7 @@ fetch("https://pipe.jspsych.org/api/data/", {
     Accept: "*/*",
   },
   body: JSON.stringify({
-    experimentID: "fzd0g5xqYwT7",
+    experimentID: "mi8ojmJIdsho",
     filename: filename,
     data: data,
   }),
